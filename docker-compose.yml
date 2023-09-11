@@ -1,0 +1,8 @@
+version: '3'
+services:
+  note:
+    build:
+      context: .  # Utilisez le répertoire courant comme contexte de construction
+      dockerfile: Dockerfile  # Utilisez le Dockerfile 
+    ports:
+      - "3001:3001"  # Port de l'application Next.js
