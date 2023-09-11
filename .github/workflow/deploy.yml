@@ -3,7 +3,7 @@ name: Deploy to Raspberry Pi
 on:
   push:
     branches:
-      - main
+      - feat/create_pipeline
 
 jobs:
   build:
