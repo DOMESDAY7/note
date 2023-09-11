@@ -10,27 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Docker
-      uses: docker/setup-qemu-action@v1
+      - name: Set up Docker
+        uses: docker/setup-qemu-action@v1
 
-    - name: Build Docker image
-      run: docker build -t note .
+      - name: Build Docker image
+        run: docker build -t note .
 
-    - name: Log in to Docker Hub (or your container registry)
-      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Log in to Docker Hub (or your container registry)
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Push Docker image
-      run: docker push note
+      - name: Push Docker image
+        run: docker push note
 
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Deploy to Raspberry Pi
-      run: |
-        ssh ${{ secrets.PI_USERNAME }}@${{ secrets.PI_HOST }} 'docker pull note'
-        ssh ${{ secrets.PI_USERNAME }}@${{ secrets.PI_HOST }} 'docker run -d --name note note'
-
+      - name: Deploy to Raspberry Pi
+        run: |
+          ssh ${{ secrets.PI_USERNAME }}@${{ secrets.PI_HOST }} 'docker pull note'
+          ssh ${{ secrets.PI_USERNAME }}@${{ secrets.PI_HOST }} 'docker run -d --name note note'
