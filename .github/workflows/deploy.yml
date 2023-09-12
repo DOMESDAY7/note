@@ -24,15 +24,16 @@ jobs:
 
       - name: Push Docker image
         run: docker push note
+
+  deploy:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+  
+      - name: Deploy to Raspberry Pi
+        run: |
+          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh ${{ secrets.PI_USERNAME }}@${{ secrets.PI_HOST }} 'docker pull note'
+          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh ${{ secrets.PI_USERNAME }}@${{ secrets.PI_HOST }} 'docker run -d --name note note'
         
- deploy:
-  runs-on: ubuntu-latest
-
-  steps:
-    - name: Install sshpass
-      run: sudo apt-get update && sudo apt-get install -y sshpass
-
-    - name: Deploy to Raspberry Pi
-      run: |
-        sshpass -p ${{ secrets.SSH_PASSWORD }} ssh ${{ secrets.PI_USERNAME }}@${{ secrets.PI_HOST }} 'docker pull note'
-        sshpass -p ${{ secrets.SSH_PASSWORD }} ssh ${{ secrets.PI_USERNAME }}@${{ secrets.PI_HOST }} 'docker run -d --name note note'
