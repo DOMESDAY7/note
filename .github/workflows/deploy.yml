@@ -24,7 +24,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/note:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/note:linux/arm/v8 
 
   deploy:
     runs-on: ubuntu-latest
@@ -37,5 +37,5 @@ jobs:
           password: ${{ secrets.PI_PASSWORD }}
           script: |
             docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin ${{ secrets.DOCKER_PASSWORD }}
-            docker pull ${{ secrets.DOCKER_USERNAME }}/note:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/note:linux/arm/v8 
             docker run -d -p 3001:3001 note
