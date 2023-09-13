@@ -36,5 +36,6 @@ jobs:
           username: ${{ secrets.PI_USERNAME }}
           password: ${{ secrets.PI_PASSWORD }}
           script: |
-            docker pull domesday/note:latest
+            docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin ${{ secrets.DOCKER_PASSWORD }}
+            docker pull ${{ secrets.DOCKER_USERNAME }}/note:latest
             docker run -d -p 3001:3001 note
